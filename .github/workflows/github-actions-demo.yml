@@ -5,9 +5,11 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+
   workflow_dispatch:
 
 jobs:
+
   First-Job:
     runs-on: ubuntu-latest
     steps:
@@ -24,6 +26,7 @@ jobs:
           DEPLOY_VER = $(git rev-parse --short HEAD)
           echo "Hello from “my $DEPLOY_VER variable’s content” commit"
       - run: echo "🍏 First job's status is ${{ job.status }}."
+  
   Second-Job:
       runs-on: ubuntu-latest
     steps:
