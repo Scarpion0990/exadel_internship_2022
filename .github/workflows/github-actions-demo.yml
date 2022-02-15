@@ -23,3 +23,24 @@ jobs:
           DEPLOY_VER=$(git rev-parse --short HEAD)
           echo "Hello from “my $DEPLOY_VER variable’s content” commit"
       - run: echo "🍏 First job's status is ${{ job.status }}."
+  Second-Job:
+      runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Printing the system date and time
+        run: |
+          date '+%Y-%m-%d %H:%M:%S'
+      - name: Printing my variable’s content
+        env:
+          MONTH: February
+          DAY__OF_THE_MONTH: 15
+          YEAR: 2022
+        run: |
+          echo “Day - “${{env.DAY__OF_THE_MONTH}}”; Month - “${{env.MONTH}}”; Year - “${{env.YEAR}}”.”
+      - name: Favorite day of week
+        env:
+          FDW: ${{ secrets.FAVORITE_DAY_OF_WEEK}}
+        run: |
+          echo “My favorite day of week is $FDW”
+      - run: echo "🍏 Second job's status is ${{ job.status }}."
