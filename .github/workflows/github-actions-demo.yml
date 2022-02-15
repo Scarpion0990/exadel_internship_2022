@@ -20,6 +20,6 @@ jobs:
           cat ${{ github.workspace }}/Task1/log.txt
       - name: Hello from “my DEPLOY_VER variable’s content” commit
         run: |
-          DEPLOY_VER = $(git rev-parse --short HEAD)
+          DEPLOY_VER=$(git rev-parse --short HEAD)
           echo "Hello from “my $DEPLOY_VER variable’s content” commit"
       - run: echo "🍏 First job's status is ${{ job.status }}."
