@@ -24,7 +24,7 @@ jobs:
           echo "Hello from “my $DEPLOY_VER variable’s content” commit"
       - run: echo "🍏 First job's status is ${{ job.status }}."
   Second-Job:
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
           date '+%Y-%m-%d %H:%M:%S'
       - name: Printing my variable’s content
         env:
-          MONTH: February
+          MONTH: 02
           DAY__OF_THE_MONTH: 15
           YEAR: 2022
         run: |
