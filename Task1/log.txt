@@ -1,0 +1,37 @@
+commit 1044af58a7ff8e99f8f03d1e2edd0ecd051fb9bc
+Author: scarpion0990 <scarpion0990@mail.ru>
+Date:   Tue Feb 15 13:59:46 2022 +0500
+
+    Revert "changes readme"
+    
+    This reverts commit ac75408318c6bf60278b99d9947c4ceea146e996.
+
+commit ac75408318c6bf60278b99d9947c4ceea146e996
+Author: scarpion0990 <scarpion0990@mail.ru>
+Date:   Tue Feb 15 13:59:33 2022 +0500
+
+    changes readme
+
+commit 7f7030eb8c56a1cd95fc2cd2194dc40e3734f136
+Author: scarpion0990 <scarpion0990@mail.ru>
+Date:   Tue Feb 15 13:52:20 2022 +0500
+
+    added gitignore
+
+commit d9c362d6d64021f4129399e8d4cfc5a34ea6f0dc
+Author: scarpion0990 <scarpion0990@mail.ru>
+Date:   Tue Feb 15 13:51:05 2022 +0500
+
+    new feature branch created and added readme
+
+commit 6a591a7df0a9d03b68153fe37374f5fed7ecce1a
+Author: scarpion0990 <scarpion0990@mail.ru>
+Date:   Tue Feb 15 13:48:11 2022 +0500
+
+    dev branch created and added test file
+
+commit fd3f703554dd46ba8f68c49a7ab99240bb51955c
+Author: scarpion0990 <scarpion0990@mail.ru>
+Date:   Tue Feb 15 13:45:49 2022 +0500
+
+    first commit
