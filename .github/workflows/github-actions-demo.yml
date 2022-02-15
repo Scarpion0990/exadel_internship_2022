@@ -25,6 +25,8 @@ jobs:
       - run: echo "🍏 First job's status is ${{ job.status }}."
   Second-Job:
     runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: [First-Job]
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
