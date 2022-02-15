@@ -1,11 +1,8 @@
 name: Exadel first task extra
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-jobs: 
+on: [push]
+
+jobs:
   First-Job:
     runs-on: ubuntu-latest
     steps:
