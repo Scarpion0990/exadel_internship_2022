@@ -37,7 +37,7 @@ jobs:
           DAY__OF_THE_MONTH: 15
           YEAR: 2022
         run: |
-          echo “Day - “${{env.DAY__OF_THE_MONTH}}”; Month - “${{env.MONTH}}”; Year - “${{env.YEAR}}”.”
+          echo Day - “${{env.DAY__OF_THE_MONTH}}”;\n Month - “${{env.MONTH}}”;\n Year - “${{env.YEAR}}”.\n
       - name: Favorite day of week
         env:
           FDW: ${{ secrets.FAVORITE_DAY_OF_WEEK}}
