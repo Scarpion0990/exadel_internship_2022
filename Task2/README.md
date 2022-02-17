@@ -1,5 +1,5 @@
-<p style="color:#063763">My Exadel Task 2 project </p> 
-=======================
+<p style="color:#063763">My Exadel Task 2 project</p> 
+======================================================
 
 ###<p style="color:#982218">Important moments:</p>
 1. Read about Cloud Services. Pros and Cons, Cloud VS Bare Metal infrastructure? I have read about it [here](https://www.volico.com/bare-metal-server-or-cloud-servers-whats-the-difference/)
