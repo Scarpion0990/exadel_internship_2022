@@ -1,7 +1,8 @@
 My Exadel Task 2 project
 ======================================================
 
-###Important moments:
+Important moments:
+------------------
 1. Read about Cloud Services. Pros and Cons, Cloud VS Bare Metal infrastructure? I have read about it [here](https://www.volico.com/bare-metal-server-or-cloud-servers-whats-the-difference/)
 2. Read about Region, Zone in AWS. What are they for? Which one will you use and why? I have read about it [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
 3. Read about Security best practices in IAM. I have read about it [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html)
@@ -12,7 +13,8 @@ My Exadel Task 2 project
 8. Read about AWS Free Tier. **Be aware what is free for new users and what is paid by your own money. Be sure and attentive.** *Yes there is limit for free tier*
 9. **Pay attention to the Billing & Cost Management Dashboard in your account.** *Thanks*
 
-###Mandatory tasks
+Mandatory tasks
+---------------
 
 1. Sign up for AWS, familiarize yourself with the basic elements of the AWS Home Console GUI.
 2. Explore AWS Billing for checking current costs.
@@ -26,13 +28,15 @@ My Exadel Task 2 project
 
 
 
-###EXTRA (optional):
+EXTRA (optional):
+-----------------
 
 1. Run steps 3-6 with instances created in different VPC. (connectivity must be both external and internal IP)
 2. Write BASH script for installing web server (nginx/apache) and creating web pages with text “Hello World”, and information about OS version
 3. Run step.6 without “manual” EC2 SSH connection.
 
-###EXTRA (optional optional):
+EXTRA (optional optional):
+--------------------------
 
 1. Make a screenshot only of your web page сontent from your browser.
 2. Create your S3 bucket and place your screenshot there.
