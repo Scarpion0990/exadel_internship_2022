@@ -9,22 +9,32 @@ Important moments:
 4. Read about AWS EC2, what is it, what is it useful for? I have read about it [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html)
 5. Read about AWS VPC (SG, Route, Internet Gateway). I have read about it [here](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html)
 6. Read about AWS Cloud storage, Route 53, CloudFront and CloudWatch. I have read about [AWS Cloud storage](https://aws.amazon.com/ru/products/storage/), [Route 53](https://aws.amazon.com/ru/route53/), [CloudFront and CloudWatch](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/monitoring-using-cloudwatch.html)
-7. If you sign up in AWS for the first time, you will have the opportunity to use SOME AWS services for free (free tier) for 1 year. To register, you need a credit card from which it will be debited and returned 1-2$. *I have done this*
+7. If you sign up in AWS for the first time, you will have the opportunity to use SOME AWS services for free (free tier) for 1 year. To register, you need a credit card from which it will be debited and returned 1-2$. *I have done this. It costs about $1 for billing purpose*
 8. Read about AWS Free Tier. **Be aware what is free for new users and what is paid by your own money. Be sure and attentive.** *Yes there is limit for free tier*
 9. **Pay attention to the Billing & Cost Management Dashboard in your account.** *Thanks*
 
 Mandatory tasks
 ---------------
 
-1. Sign up for AWS, familiarize yourself with the basic elements of the AWS Home Console GUI.
-2. Explore AWS Billing for checking current costs.
-3. Create two EC2 Instance t2.micro with different operating systems (Amazon linux / Ubuntu ...). Try to stop them, restart, delete, recreate.
-4. Make sure there is an SSH connection from your host to the created EC2. What IP EC2 used for it?
-5. Make sure  ping and SSH are allowed from one instance to another in both ways. Configure SSH connectivity between instances using SSH keys.
+1. Sign up for AWS, familiarize yourself with the basic elements of the AWS Home Console GUI. *Answer: I signed up for AWS, and familiarized with the basic of the Home Console GUI. The address is https://console.aws.amazon.com/* 
+2. Explore AWS Billing for checking current costs. *Answer: I saw billing and costs from [AWS Billing Dashbord](https://console.aws.amazon.com/billing/home)*
+3. Create two EC2 Instance t2.micro with different operating systems (Amazon linux / Ubuntu ...). Try to stop them, restart, delete, recreate. *Answer: I created two EC2 Instance t2.micro with Amazon linux and Ubuntu and tried to stop with Stop instance, restart with Reboot instance, delete with 
+   Terminate instance, recreate with Terminate instance and Launch instance (or Launch instance from template).*
+   ![created ec2 instances](./images/1.png)
+4. Make sure there is an SSH connection from your host to the created EC2. What IP EC2 used for it? *Answer: By befault SSH connection added in rules (PS: added http and https rules in Security Group, I used http only in my exmples), so SSH connection work perfectly between my host and EC2. 
+   Public ip for Amazon linux is 3.142.166.10 and private ip is 172.31.1.137. Public if for Ubuntu linux is 3.19.67.215 and private ip is 172.31.31.123*
+5. Make sure  ping and SSH are allowed from one instance to another in both ways. Configure SSH connectivity between instances using SSH keys. *Answer: ping and SSH passed, they are worked and created key with name iskandarsamazon.pem and copied all instances and connected between instances with this key like ssh -i "iskandarsamazon.pem" ec2-user@ec2-3-142-166-10.us-east-2.compute.amazonaws.com and ssh -i "iskandarsamazon.pem" ubuntu@ec2-3-19-67-215.us-east-2.compute.amazonaws.com, before you should run chmod command chmod 400 iskandarsamazon.pem*
 6. Install web server (nginx/apache) to one instance;
    - Create a web page with the text “Hello World” and additional information about OS version, free disk space,  free/used memory in the system and about all running processes;
    - Make sure your web server is accessible from the internet and you can see your web page in your browser;
-   - Make sure on the instance without nginx/apache you also maysee the content of your webpage from instance with nginx/apache.
+   - Make sure on the instance without nginx/apache you also may see the content of your webpage from instance with nginx/apache.
+   
+   *Answer: Installed web server Nginx to Ubuntu instance* 
+   - *created web page with text "Hello world" and additional information about OS version, free disk space,  free/used memory in the system and about all running processes(used commands like lsb_release -a, df -h, du -h, ps -aux)*
+   - *Web server is accessible from the internet and web page is [here](http://ec2-3-19-67-215.us-east-2.compute.amazonaws.com/)*
+     ![created ec2 instances](./images/2.png)
+   - *I tested on the instance without nginx to see my instance which has nginx with command curl http://ec2-3-19-67-215.us-east-2.compute.amazonaws.com*
+     ![created ec2 instances](./images/3.png)
 
 
 
