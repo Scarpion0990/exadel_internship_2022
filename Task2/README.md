@@ -41,9 +41,17 @@ Mandatory tasks
 EXTRA (optional):
 -----------------
 
-1. Run steps 3-6 with instances created in different VPC. (connectivity must be both external and internal IP)
-2. Write BASH script for installing web server (nginx/apache) and creating web pages with text “Hello World”, and information about OS version
-3. Run step.6 without “manual” EC2 SSH connection.
+1. Run steps 3-6 with instances created in different VPC. (connectivity must be both external and internal IP). *Answer: I created a new VPC in VPC dashboard in AWS with name Iskandars VPC.
+   ![created ec2 instances](./images/4.png) Then, created Internet Gateway and attached to my Iskandars VPC (for connection to the internet).
+   ![created ec2 instances](./images/5.png) Next, I created two public and two private subnets, which in availability zone A and availability zone B with one public and private subnets accordingly 
+   (for public subnets enable assigning public IPv4 addresses).![created ec2 instances](./images/6.png) Then I modified Route tables for public subnets to grant them access to the internet. Added new 0.0.0.0/0 route which will be pointed towards my Internet Gateway. ![created ec2 instances](./images/7.png) 
+According to the fact that my private subnets don't have public IPs I will need to attach them to NAT Gateway because they will not be able to go through Internet Gateway without Public IP. So first thing I will do is to create two NAT Gateways one for Private Subnet A and another one For 
+   Private Subnet B. NAT Gateway also requires an elastic IP. then create a private Route Table which will be pointed towards our NAT Gateway. ![created ec2 instances](./images/8.png)
+Now to Test out my VPC I will launch two instances one will be auto scaled in public subnets A and B so if it goes
+   down for some reason it will automatically scale back to one and one in private subnet and I will SSH from public
+   instance to the private one and see if private instance has connection to the internet.*
+2. Write BASH script for installing web server (nginx/apache) and creating web pages with text “Hello World”, and information about OS version. *Answer: [Install.sh](./Install.sh) BASH script for installing web server with "Hello World" and OS information.*
+3. Run step.6 without “manual” EC2 SSH connection. *Answer: I used User data section to run without "manual" EC2 SSH connection* ![created ec2 instances](./images/9.png)
 
 EXTRA (optional optional):
 --------------------------
