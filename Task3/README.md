@@ -17,7 +17,7 @@ Mandatory tasks
 
    Both instances must have a tag with names.
    *Answer: Firstly, I created new AWS profile on my local PC with Access Key ID and Secret Access Key which given when I created user in AWS. ![created ec2 instances](./images/1.png)<br> Then, I created new VPC on networking module.![created ec2 instances](./images/2.png) <br>Then, I created 
-   two AWS security groups (see step 2).<br>Then, I created two EC2 Instance t2.micro. Ubuntu on public subnet with [installweb.sh](./terraform/installweb.sh):![created ec2 instances](./images/5.png)<br> CentOS on private subnet:![created ec2 instances](./images/6.png)*
+   two AWS security groups (see step 2).<br>Then, I created two EC2 Instance t2.micro. Ubuntu on public subnet with [installweb.sh](./terraform/installweb.sh):![created ec2 instances](./images/5.png)<br> CentOS on private subnet:<br>![created ec2 instances](./images/6.png)*
 2. EC2 Ubuntu must have Internet access, there must be incoming access: ICMP, TCP/22, 80, 443, and any outgoing access. *Answer: Public: allowed SSH, HTTP, HTTPS, ICMP inbound traffic over interet:![created ec2 instances](./images/3.png)*
 3. EC2 CentOS should not have access to the Internet, but must have outgoing and incoming access: ICMP, TCP/22, TCP/80, TCP/443 only on the local network where EC2 Ubuntu, EC2 CentOS is located. *Answer: Private: allowed SSH, HTTP, HTTPS, ICMP inbound traffic over private network (see step 7 also)
 : ![created ec2 instances](./images/4.png)*
