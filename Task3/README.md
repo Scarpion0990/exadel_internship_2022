@@ -29,7 +29,7 @@ to install docker and put it [installweb.sh](./terraform/installweb.sh). ![creat
 EXTRA (optional):
 -----------------
 
-6. Complete  step 1, but AMI ID cannot be hardcoded. You can hardcode operation system name, version, etc. *Answer: AMI of both intances is dynamic: ![created ec2 instances](./images/9.png)*
+6. Complete  step 1, but AMI ID cannot be hardcoded. You can hardcode operation system name, version, etc. *Answer: AMI of both intances is dynamic: <br>![created ec2 instances](./images/9.png)*
 7. Step 3 read as:
 EC2 CentOS should have outgoing and incoming access: ICMP, TCP/22, TCP/80, TCP/443, only to EC2 Ubuntu. *Answer: See step 3.*
 8. On EC2 CentOS install nginx (note. Remember about step 7, the task can be done in any way, it is not necessary to use terraform)
