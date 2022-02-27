@@ -3,10 +3,10 @@ data "aws_availability_zones" "available" {}
 module "vpc" {
   source                       = "terraform-aws-modules/vpc/aws"
   name                         = "exadel-vpc"
-  cidr                         = "10.0.0.0/16"
+  cidr                         = var.vpc_cidr_block
   azs                          = data.aws_availability_zones.available.names
-  private_subnets              = ["10.0.1.0/24"]
-  public_subnets               = ["10.0.2.0/24"]
+  private_subnets              = [var.private_subnet_cidr_block]
+  public_subnets               = [var.public_subnet_cidr_block]
   create_database_subnet_group = true
   enable_nat_gateway           = true
   single_nat_gateway           = true
@@ -18,40 +18,24 @@ resource "aws_security_group" "allow_pub" {
   description = "Allow SSH,HTTP,HTTPS, ICMP inbound traffic"
   vpc_id      = module.vpc.vpc_id
 
-  ingress {
-    description = "SSH from the internet"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  dynamic "ingress" {
+    iterator = port
+    for_each = var.ingress_ports
+    content {
+      from_port   = port.key
+      to_port     = port.key == 8 ? local.any_port : port.key
+      protocol    = port.value
+      cidr_blocks = local.all_ips
+    }
   }
-  ingress {
-    description = "HTTP from the internet"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    description = "HTTPS from the internet"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    description = "ICMP from the internet"
-    from_port   = 8
-    to_port     = 0
-    protocol    = "icmp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = local.any_port
+    to_port     = local.any_port
+    protocol    = local.any_protocol
+    cidr_blocks = local.all_ips
   }
+
   tags = {
     Name = "allow_pub"
   }
@@ -63,41 +47,32 @@ resource "aws_security_group" "allow_priv" {
   description = "Allow SSH, ICMP, HTTP,HTTPS inbound traffic"
   vpc_id      = module.vpc.vpc_id
 
-  ingress {
-    description = "SSH only from internal VPC clients"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+  dynamic "ingress" {
+    iterator = port
+    for_each = var.ingress_ports
+    content {
+      from_port   = port.key
+      to_port     = port.key == 8 ? local.any_port : port.key
+      protocol    = port.value
+      cidr_blocks = local.priv_ips
+    }
   }
-  ingress {
-    description = "ICMP only from internal VPC clients"
-    from_port   = 8
-    to_port     = 0
-    protocol    = "icmp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-  ingress {
-    description = "HTTP only from internal VPC clients"
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
-  ingress {
-    description = "HTTPS only from internal VPC clients"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
-  }
+
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["10.0.0.0/16"]
+    from_port   = local.any_port
+    to_port     = local.any_port
+    protocol    = local.any_protocol
+    cidr_blocks = local.priv_ips
   }
+
   tags = {
     Name = "allow_priv"
   }
+}
+
+locals {
+  any_port     = 0
+  any_protocol = "-1"
+  all_ips      = ["0.0.0.0/0"]
+  priv_ips     = ["10.0.0.0/16"]
 }

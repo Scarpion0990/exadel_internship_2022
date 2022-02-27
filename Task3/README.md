@@ -33,7 +33,9 @@ EXTRA (optional):
 7. Step 3 read as:
 EC2 CentOS should have outgoing and incoming access: ICMP, TCP/22, TCP/80, TCP/443, only to EC2 Ubuntu. *Answer: See step 3.*
 8. On EC2 CentOS install nginx (note. Remember about step 7, the task can be done in any way, it is not necessary to use terraform)
-   - Create a web page with the text “Hello World”. This page must be visible from the  EC2 Ubuntu.
+   - Create a web page with the text “Hello World”. This page must be visible from the  EC2 Ubuntu. 
+   - *Answer: I made SSH connection from Ubuntu to Centos **ssh -i "centos-key.pem" centos@10.0.1.156**. Then, I made SSH tunnel on Centos for installing Nginx with static page "Hello World" **ssh -i webserver-key.pem -NTf -D 10.0.1.156:1080 ubuntu@10.0.2.155**. Then, I changed **/etc/yum.conf** 
+     file added end the end **proxy=socks5h://10.0.1.156:1080**. After, I installed nginx on Centos **sudo yum install nginx** mirroring to Ubuntu internet. Then, I changed default page nginx **/usr/share/nginx/html/index.html** to "Hello world". Then checked it from ubuntu curl 10.0.1.156* ![created ec2 instances](./images/10.png)
 
 **The result of steps.1-7. is a terraform files in your GitHub. +file with output terraform plan BEFORE creating infrastructure.**
 

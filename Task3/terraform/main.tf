@@ -4,12 +4,12 @@ provider "aws" {
 }
 
 data "aws_ami" "latest-ubuntu" {
-  owners      = ["099720109477"]
+  owners      = [var.owner_ubuntu_id]
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    values = [var.ubuntu_ami]
   }
 
   filter {
@@ -19,12 +19,12 @@ data "aws_ami" "latest-ubuntu" {
 }
 
 data "aws_ami" "centos" {
-  owners      = ["374168611083"]
+  owners      = [var.owner_centos_id]
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["eu-central-1 image for x86_64 CentOS_7"]
+    values = [var.caentos_ami]
   }
 
   filter {
@@ -45,15 +45,15 @@ module "networking" {
 #### Ubuntu server
 resource "aws_instance" "web-server" {
   ami                    = data.aws_ami.latest-ubuntu.id
-  instance_type          = "t2.micro"
+  instance_type          = var.instance_type
   key_name               = "webserver-key"
   subnet_id              = module.networking.vpc.public_subnets[0]
   vpc_security_group_ids = [module.networking.sg_pub_id]
-  user_data              = file("installweb.sh")
+  user_data              = data.template_file.user_data.rendered
 
   provisioner "file" {
-    source      = "./centos-key.pem"
-    destination = "/home/ubuntu/centos-key.pem"
+    source      = "./*.pem"
+    destination = "/home/ubuntu/*.pem"
 
     connection {
       type        = "ssh"
@@ -79,10 +79,14 @@ resource "aws_instance" "web-server" {
   }
 }
 
+data "template_file" "user_data" {
+  template = file("installweb.sh")
+}
+
 #### CentOS server
 resource "aws_instance" "centos-server" {
   ami                         = data.aws_ami.centos.id
-  instance_type               = "t2.micro"
+  instance_type               = var.instance_type
   associate_public_ip_address = false
   key_name                    = "centos-key"
   subnet_id                   = module.networking.vpc.private_subnets[0]
