@@ -10,9 +10,9 @@ Tasks
 
 1. Install docker. (Hint: please use VMs or Clouds  for this.). *Answer: Using these commands to install docker is not recommended ([official reference](https://docs.docker.com/engine/install/ubuntu/)): `sudo apt install docker` `sudo apt install docker.io` See [script file](./docker.sh) taken 
    from official documentation*  
-**EXTRA 1.1.** Write bash script for installing Docker. *Answer: I have written [script file](./docker.sh) for installing Docker (Using AWS and put script to User data) ![docker](./images/1.png)*  
+**EXTRA 1.1.** Write bash script for installing Docker. *Answer: I have written [script file](./docker.sh) for installing Docker (Using AWS and put script to User data)<br> ![docker](./images/1.png)*  
 
-2. Find, download and run any docker container "hello world". (Learn commands and parameters to create/run docker containers. *Answer: After installation, I added docker to sudo group `sudo usermod -aG docker ${USER}` there is sample image hello world, I run it `docker run hello-world`![docker](./images/2.png)*  
+2. Find, download and run any docker container "hello world". (Learn commands and parameters to create/run docker containers. *Answer: After installation, I added docker to sudo group `sudo usermod -aG docker ${USER}` there is sample image hello world, I run it `docker run hello-world`<br>![docker](./images/2.png)*  
 **EXTRA 2.1.** Use image with html page, edit html page and paste text: `<Username> 2022` *Answer: I run these commands for this: `docker run -d --name task4 -p 20080:80 httpd` and `CONTID=$(docker ps -aqf "name=task4")` then `docker exec $CONTID sh -c "echo '<br>Iskandar 2022' >> 
    /usr/local/apache2/htdocs/index.html"` and checking with curl `curl http://127.0.0.1:20080`*![docker](./images/3.png)
 
@@ -25,12 +25,13 @@ Tasks
 *For building: `docker image build -t webserver:latest .`For running `docker run -itd -e DEVOPS="Iskandar changed" --rm -p 80:80 webserver:latest`*
    ![docker](./images/6.png)
 4. Push your docker image to docker hub (https://hub.docker.com/). Create any description for your Docker image. *Answer: I already have docker hub account so, I loged in `docker login`*  
-   ![docker](./images/7.png) *And I taged `docker image tag webserver:latest scarpion0990/webserver:0.1.1` and pushed `docker image tag webserver:latest scarpion0990/webserver:0.1.1`*![docker](./images/8.png)<br> *My docker hub image: https://hub.docker.com/repository/docker/scarpion0990/webserver* <br>  **EXTRA 4.1.** Integrate your docker image and your github 
+   ![docker](./images/7.png) <br>*And I taged `docker image tag webserver:latest scarpion0990/webserver:0.1.1` and pushed `docker image tag webserver:latest scarpion0990/webserver:0.1.1`*![docker](./images/8.png)<br> *My docker hub image: https://hub.docker.
+   com/repository/docker/scarpion0990/webserver* <br>  **EXTRA 4.1.** Integrate your docker image and your github 
    repository. Create an automatic deployment for each 
    push. (The Deployment can be in the “Pending” status for 10-20 
    minutes. This is normal).
 *Answer: An automatic deployment only accessible for team and pro accounts and also with ci/cd actions. [Docker docs](https://docs.docker.com/ci-cd/github-actions/)*
-*I have read this documentation and created two repo secrets and created main.yml(see .github directory)* ![docker](./images/9.png)
+*I have read this documentation and created two repo secrets and created main.yml(see .github directory)*<br> ![docker](./images/9.png)
 
 
 5.  Create docker-compose file. Deploy a few docker containers via one docker-compose file.
