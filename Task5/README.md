@@ -41,6 +41,8 @@ Tasks
     slave_1 ansible_ssh_host=172.31.24.8
     slave_2 ansible_ssh_host=172.31.31.107
 
+*Result of ping command (ansible all -m ping)*
+
 ![ansible](./images/2.png)
 
 3. My First Playbook: write a playbook for installing Docker on two machines and run it.
