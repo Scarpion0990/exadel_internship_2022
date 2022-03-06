@@ -95,7 +95,122 @@ Tasks
 ![ansible](./images/3.png)
 
 **EXTRA 1.** Write a playbook for installing Docker and one of the (LAMP/LEMP stack, Wordpress, ELK, MEAN - GALAXY do not use) in Docker.  
-**EXTRA 2.** Playbooks should not have default creds to databases and/or admin panel.  
-**EXTRA 3.** For the execution of playbooks, dynamic inventory must be used (GALAXY can be used).
+*Answer: I have written a playbook for installing Wordpress in Docker (See playbook folder)*  
+
+```
+---
+- hosts: all
+  become: true
+  vars_prompt:
+
+    - name: wp_db_name
+      prompt: Enter the DB name
+
+    - name: db_user
+      prompt: Enter the DB username
+
+    - name: db_password
+      prompt: Enter the DB password
+
+  vars:
+  db_host: db
+  wp_name: wordpress
+  docker_network: wordpress_net
+  #wp_host_port: "{{ lookup('env','WORDPRESS_PORT') | default(8080)}}"
+  wp_container_port: 80
+
+  tasks:
+
+    - name: "Create a network"
+      docker_network:
+      name: "{{ docker_network }}"
+
+    - name: Pull wordpress image
+      docker_image:
+      name: wordpress
+      source: pull
+
+    - name: Pull MySQL image
+      docker_image:
+      name: mysql:5.7
+      source: pull
+
+    - name: Create DB container
+      docker_container:
+        name: "{{ db_host }}"
+        image: mysql:5.7
+        state: started
+        # ports:
+        #   - "3306"
+        network_mode: "{{ docker_network }}"
+        env:
+          MYSQL_USER: "{{ db_user }}"
+          MYSQL_PASSWORD: "{{ db_password }}"
+          MYSQL_DATABASE: "{{ wp_db_name }}"
+          MYSQL_RANDOM_ROOT_PASSWORD: '1'
+        volumes:
+          - db:/var/lib/mysql:rw
+        restart_policy: always
+
+    - name: Create Wordpress container
+      docker_container:
+        name: "{{ wp_name }}"
+        image: wordpress:latest
+        state: started
+        ports:
+        - "80:80" 
+        restart_policy: always
+        network_mode: "{{ docker_network }}"
+        env:
+          WORDPRESS_DB_HOST: "{{ db_host }}:3306"
+          WORDPRESS_DB_USER: "{{ db_user }}"
+          WORDPRESS_DB_PASSWORD: "{{ db_password }}"
+          WORDPRESS_DB_NAME: "{{ wp_db_name }}"
+        volumes:
+          - wordpress:/var/www/html
+```
+
+**EXTRA 2.** Playbooks should not have default creds to databases and/or admin panel.
+*Answer: I have known two methods for this first is DB credits are not included in the playbook and written it manually*
+
+![ansible](./images/4.png)
+
+*second one is using encrypt our credits with `ansible-vault encrypt vars.yml` (Can be created ar encrypted existing file [docs](https://docs.ansible.com/ansible/latest/user_guide/vault.html)) and using encrypted variables `ansible-playbook --ask-vault-pass vars.yml` or to get from file 
+`ansible-playbook --vault-password-file vars.yml` (It is for a single password).*
+
+**EXTRA 3.** For the execution of playbooks, dynamic inventory must be used (GALAXY can be used).  
+*Answer: I have read this [documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html) for solving with dynamic inventory (Needed boto3, botocore). I installed amazon.aws.aws_ec2 plugin*
+
+    ansible-galaxy collection install amazon.aws
+
+![ansible](./images/5.png)
+
+*I created aws_ec2.yaml file*
+
+```
+plugin: aws_ec2
+regions:
+- eu-central-1
+  keyed_groups:
+- key: tags.group
+  separator: ""
+```
+
+*Then, I created new Role in IAM -> roles (with administratorAccess)*
+
+![ansible](./images/6.png)
+
+*Then, I attached this role to control_plane (EC2 -> actions -> Security -> Modify IAM role)*
+
+![ansible](./images/7.png)
+
+*To test I ran command `ansible-inventory -i aws_ec2.yaml --list`*
+
+*I checked to execute ping command to my instances `ansible aws_ec2 -i aws_ec2.yaml -m ping --private-key centos-key.pem -u ubuntu`*
+
+![ansible](./images/8.png)
+
+*References: [devopscube.com](https://devopscube.com/setup-ansible-aws-dynamic-inventory/#:~:text=Dynamic%20inventory%20is%20an%20ansible,it%20became%20an%20Ansible%20plugin.), [clarusway.com](https://clarusway.com/ansible-working-with-dynamic-inventory-using-aws-ec2-plugin/), 
+[ansible documentation](https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html)*
 
 **The result of this task will be ansible files in your GitHub.**
