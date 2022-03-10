@@ -52,3 +52,4 @@ Extra tasks
 
  For FAVORITE_DAY_OF_WEEK I created secret in repositpry settings with this name and used ${{ secrets.FAVORITE_DAY_OF_WEEK}}
   
+  
