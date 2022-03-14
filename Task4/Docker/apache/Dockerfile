@@ -7,7 +7,7 @@ RUN apt-get update \
 && service apache2 restart \
 && rm /var/www/html/index.html 
 
-COPY ./Task4/Docker/apache/webpage.sh /usr/local/bin/webpage.sh
+COPY webpage.sh /usr/local/bin/webpage.sh
 
 RUN chmod a+x /usr/local/bin/webpage.sh
 
