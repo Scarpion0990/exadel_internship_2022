@@ -77,8 +77,88 @@ pipeline {
 
 ![Jenkins](./images/7.png)
 
-6. Create Pipeline, which will build artifact using Dockerfile directly from your github repo (use Dockerfile from previous task). *Answer: *
-7. Pass  variable PASSWORD=QWERTY! To the docker container. Variable must be encrypted!!!
+6. Create Pipeline, which will build artifact using Dockerfile directly from your github repo (use Dockerfile from previous task). *Answer: I changed pipeline to*
+
+```
+pipeline {
+  agent {
+    docker { 
+        image 'ubuntu' 
+        args '-u root:sudo'
+    }
+  }
+  stages {
+    stage('Install Docker') {
+      steps {
+        sh '''
+           apt update -y
+           apt install curl git -y
+           curl https://get.docker.com/ > dockerinstall && chmod 777 dockerinstall && ./dockerinstall
+           docker ps -a
+        '''
+      }
+    }
+    stage('Git docker build') {
+      steps {
+        sh '''
+            git clone https://github.com/Scarpion0990/exadel_internship_2022.git
+            cp exadel_internship_2022/Task4/Docker/apache/webpage.sh .
+            docker build -t webserver:latest -f exadel_internship_2022/Task4/Docker/apache/Dockerfile .
+            docker images
+        '''  
+      }
+    }
+  }
+}
+```
+![Jenkins](./images/8.png)
+
+7. Pass  variable PASSWORD=QWERTY! To the docker container. Variable must be encrypted!!! *Answer: I added in Credentials in Manage Credentials with Secret text format and use it (PASSWORD=QWERTY!)*
+
+```
+pipeline {
+  agent {
+    docker { 
+        image 'ubuntu' 
+        args '-u root:sudo'
+    }
+  }
+  
+  environment {
+        PASSWORD = credentials('PASSWORD')
+  }
+  
+  stages {
+    stage('Install Docker') {
+      steps {
+        sh '''
+           apt update -y
+           apt install curl git -y
+           curl https://get.docker.com/ > dockerinstall && chmod 777 dockerinstall && ./dockerinstall
+           docker ps -a
+        '''
+      }
+    }
+    stage('Git docker build') {
+      steps {
+        sh '''
+            cp exadel_internship_2022/Task4/Docker/apache/webpage.sh .
+            docker build -t webserver:latest -f exadel_internship_2022/Task4/Docker/apache/Dockerfile .
+            docker images
+        '''  
+      }
+    }
+    
+    stage('Run Container') {
+      steps {
+        sh 'docker run -d -e PASSWORD=${PASSWORD} webserver'
+        }
+    }
+    
+  }
+}
+```
+![Jenkins](./images/9.png)
 
 EXTRA:
 ---------------
