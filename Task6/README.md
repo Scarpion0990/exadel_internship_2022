@@ -163,7 +163,7 @@ pipeline {
 EXTRA:
 ---------------
 
-1. Create a pipeline, which will run a docker container from Dockerfile at the additional VM.
-2. Create an **ansible playbook**, which will deploy Jenkins.
+1. Create a pipeline, which will run a docker container from Dockerfile at the additional VM. *Answer: I did it while working*
+2. Create an **ansible playbook**, which will deploy Jenkins. *Answer: I created an ansible playbook which*
 3. Deploy a local **docker registry**, upload a docker **image** there, download **img** from your local **docker registry** and run the **container**.
 4. Configure integration between Jenkins and your Git repo. Jenkins project must be started automatically if you push or merge to master, you also must see Jenkins last build status(success/unsuccess) in your Git repo.
