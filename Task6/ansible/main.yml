@@ -1,0 +1,19 @@
+---
+- name: Install docker on master host and run some containers
+  hosts: tag_Name_Master_Host
+  become: yes
+
+  roles:
+    - install_docker
+    - configure_docker_remote_api
+    - deploy_local_docker_registry
+    - deploy_jenkins_master_host
+    - build_jenkins_agent
+
+- name: Install docker on agent host
+  hosts: tag_Name_Agent_Host
+  become: yes
+
+  roles:
+    - install_docker
+    - configure_docker_remote_api

@@ -1,0 +1,15 @@
+---
+- name: Copy Dockerfile
+  copy:
+    src: Dockerfile
+    dest: /home/ubuntu/project/agent/
+    mode: 664
+
+- name: Build an image
+  docker_image:
+    build:
+      path: /home/ubuntu/project/agent
+    name: localhost:5000/jenkins_agent
+    tag: lts-jdk11
+    push: yes
+    source: build

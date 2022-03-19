@@ -1,0 +1,43 @@
+---
+- name: Copy something
+  copy:
+    src: Dockerfile
+    dest: /home/ubuntu/project/master/
+
+- name: Change permissions to docker.sock
+  file:
+    path: /var/run/docker.sock
+    mode: '0766'
+
+- name: Build an image
+  docker_image:
+    build:
+      path: /home/ubuntu/project/master
+    name: localhost:5000/jenkins_master
+    tag: lts-jdk11
+    push: yes
+    source: build
+
+- name: Create Jenkins container
+  docker_container:
+    name: Jenkins
+    image: localhost:5000/jenkins_master:lts-jdk11
+    groups: 0
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    state: started
+####################################################
+# On the first run
+####################################################
+#- name: Get jenkins temp password
+#  ansible.builtin.shell: "docker logs Jenkins"
+#  register: result
+#
+#- name: Print result
+#  ansible.builtin.debug:
+#    var: result
+#    verbosity: 2

@@ -1,0 +1,22 @@
+---
+- name: Create data directory for local docker registry (LDR)
+  file:
+    path: /LDR/data
+    state: directory
+
+- name: Deploy LDR
+  docker_container:
+    name: registry
+    image: registry:2
+    ports:
+      - "5000:5000"
+    volumes:
+      - /LDR/data:/data
+    state: started
+
+#- name: Pull jenkins image, tag and push to LDR
+#  docker_image:
+#    name: jenkins/jenkins:lts-jdk11
+#    repository: localhost:5000/jenkins_master
+#    push: yes
+#    source: pull
