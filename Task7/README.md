@@ -68,9 +68,11 @@ Then, I started proccesses Zabbix (http://52.28.126.171/zabbix/setup.php) and co
 2. ELK:  
    *Nobody is forgotten and nothing is forgotten.*  
    2.1 Install and configure ELK *Answer: I installed ELK reading [this tutorial](https://elk-docker.readthedocs.io/) in docker*  
-   `sudo docker pull sebp/elk`  
-   `sudo sysctl -w vm.max_map_count=262144`  
-   `sudo docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -itd --name elk sebp/elk`  
+   ```
+   sudo docker pull sebp/elk  
+   sudo sysctl -w vm.max_map_count=262144
+   sudo docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -itd --name elk sebp/elk  
+   ```
    ![active](./images/10.png)  
    *and second method I installed ELK with Grafana (ELK_Grafana folder)*  
    `docker-compose up -d`  
