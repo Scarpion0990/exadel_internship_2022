@@ -1,0 +1,2 @@
+[zabbix_client]
+zabbix_client ansible_host=172.31.22.252
