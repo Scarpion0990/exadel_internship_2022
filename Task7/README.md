@@ -96,9 +96,12 @@ Then, I started proccesses Zabbix (http://52.28.126.171/zabbix/setup.php) and co
    docker network create -d bridge elknet
    docker run -p 80:80 -it --network=elknet imageName
    ```
-   2.3 Customize your dashboards in ELK *Answer: *  
-   **EXTRA 2.4:** Set up filters on the Logstash side (get separate docker_container and docker_image fields from the message field)  
-   2.5 Configure monitoring in ELK, get metrics from your running containers  
+   2.3 Customize your dashboards in ELK *Answer: See 2.4*  
+   **EXTRA 2.4:** Set up filters on the Logstash side (get separate docker_container and docker_image fields from the message field) *I used Docker metrica (Logstash must be enabled from metricbeat.yml) to show docker containers and images*
+   ![active](./images/15.png)  
+   2.5 Configure monitoring in ELK, get metrics from your running containers *I used Docker metrics from data source*  
+   ![active](./images/13.png)
+   ![active](./images/14.png)
    2.6 Study features and settings  
 
 
@@ -111,5 +114,7 @@ Then, I started proccesses Zabbix (http://52.28.126.171/zabbix/setup.php) and co
    ![active](./images/11.png)
    3.2 Integrate with installed ELK *Answer: I integrated it with ELK, adding data source with elasticsearch*
    ![active](./images/12.png) 
-   3.3 Set up Dashboards  
-   3.4 Study features and settings  
+   ![active](./images/16.png) 
+   3.3 Set up Dashboards *Answer: I went to dashboards and created new dashboard*  
+   ![active](./images/17.png) 
+   3.4 Study features and settings *I am studying features and settings*  
